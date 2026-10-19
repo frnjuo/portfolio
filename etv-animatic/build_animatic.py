@@ -21,7 +21,6 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_BLEND = os.path.join(HERE, "etv_animatic.blend")
 FPS = 30
 RES = (1280, 720)
-VERSION = "v01"
 
 FONT_FILES = {
     "title": "/usr/share/fonts/opentype/inter/InterDisplay-ExtraBoldItalic.otf",
@@ -541,15 +540,7 @@ def setup_scene(sc, code, title, dur, beats):
     w = bpy.data.worlds.new(f"{title}_world")
     w.color = (0.018, 0.02, 0.026)
     sc.world = w
-    rd = sc.render
-    rd.use_stamp = True
-    for prop in ("date", "render_time", "filename", "memory", "hostname", "marker", "frame_range", "sequencer_strip"):
-        setattr(rd, f"use_stamp_{prop}", False)
-    for prop in ("time", "frame", "camera", "lens", "scene", "note"):
-        setattr(rd, f"use_stamp_{prop}", True)
-    rd.stamp_font_size = 18
-    rd.stamp_background = (0, 0, 0, 0.65)
-    rd.stamp_note_text = f"Е ТВ · АНИМАТИК {VERSION} · {title}"
+    sc.render.use_stamp = False  # чистый кадр, без прожига
     sc["etv_code"] = code
     sc["etv_title"] = title
     sc["etv_beats"] = json.dumps(beats, ensure_ascii=False)
